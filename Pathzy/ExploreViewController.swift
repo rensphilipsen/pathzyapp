@@ -15,6 +15,8 @@ class ExploreViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     var Locations = [Location]()
     var locationManager: CLLocationManager!
     var FillColor = UIColor()
+    var currentUser: User!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +30,7 @@ class ExploreViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         mapView.showsUserLocation = true
         
         self.loadJsonData()
-        _ = self.setInterval(5, block: { () -> Void in
+        _ = self.setInterval(1, block: { () -> Void in
             self.loadJsonData()
         })
         
@@ -57,16 +59,29 @@ class ExploreViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         
         let mapPoint = MKMapPointForCoordinate(mapView.userLocation.coordinate);
         let circlePoint = circleRenderer.pointForMapPoint(mapPoint)
-        let entered = CGPathContainsPoint(circleRenderer.path, nil, circlePoint, false)
-        
-        if(entered) {
-            print("entered!!")
+        if(CGPathContainsPoint(circleRenderer.path, nil, circlePoint, false)) {
+            let enteredLocation = getLocationByLatAndLong(circleRenderer.circle.coordinate.latitude, longitude: circleRenderer.circle.coordinate.longitude)
+            self.updateLocationUser((enteredLocation?.id)!, userId: 2)
         }
-        
-        
         return circleRenderer
     }
     
+    func getLocationByLatAndLong (latitude: Double, longitude: Double) -> Location? {
+        for location in Locations {
+            if (location.latitude == latitude && location.longitude == longitude) {
+                return location
+            }
+        }
+        return nil
+    }
+    
+    func updateLocationUser (locationId: Int, userId: Int) {
+        let url = NSURL(string: "http://pathzy.nl/getlocations.php?locatie_id="+String(locationId)+"&user_id="+String(userId))
+        let request = NSURLRequest(URL: url!)
+        let session = NSURLSession.sharedSession()
+        let dataTask = session.dataTaskWithRequest(request)
+        dataTask.resume()
+    }
 
     func loadJsonData() {
         let url = NSURL(string: "http://pathzy.nl/getlocations.php?getAll")

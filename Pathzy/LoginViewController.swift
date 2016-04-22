@@ -12,6 +12,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate  {
 
     @IBOutlet weak var loginUsername: UITextField!
     @IBOutlet weak var loginPassword: UITextField!
+    var currentUser: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -33,7 +35,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate  {
     @IBAction func loginButtonPressed(sender: AnyObject) {
         self.checkLogin(loginUsername.text!, password: loginPassword.text!){ (response:AnyObject) in
             let jsonData = response as? [String: String]
-            
             
             if (jsonData!["authentication"] == "true") {
                 dispatch_async(dispatch_get_main_queue(), {
@@ -85,5 +86,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate  {
     {
         textField.resignFirstResponder()
         return true;
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "loggedIn") {
+            let nav = segue.destinationViewController as! UINavigationController
+            let exploreController = nav.topViewController as! ExploreViewController
+            exploreController.currentUser = self.currentUser
+        }
     }
 }
