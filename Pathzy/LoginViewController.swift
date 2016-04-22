@@ -32,15 +32,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate  {
     
     @IBAction func loginButtonPressed(sender: AnyObject) {
         self.checkLogin(loginUsername.text!, password: loginPassword.text!){ (response:AnyObject) in
-            let jsonData = response as? [String: AnyObject]
+            let jsonData = response as? [String: String]
             
-            var signedIn = false
-            signedIn = jsonData!["authentication"]!.boolValue!
             
-            if (signedIn) {
+            if (jsonData!["authentication"] == "true") {
                 dispatch_async(dispatch_get_main_queue(), {
+                    let user = User(
+                        id: Int(jsonData!["id"]!)!,
+                        username: jsonData!["name"]!,
+                        color: jsonData!["color"]!)
                     
-                    self.performSegueWithIdentifier("loggedIn", sender: self)
+                    self.performSegueWithIdentifier("loggedIn", sender: user)
                 })
             } else {
                 let alertController = UIAlertController(title: "Pathzy", message:
