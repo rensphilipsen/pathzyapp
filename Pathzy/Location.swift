@@ -10,15 +10,15 @@ import Foundation
 
 class Location {
     var id: Int
-    var userId : Int
+    var user : User
     var title: String
     var latitude: Double
     var longitude: Double
     var radius: Double
     
-    init(id: Int, userId: Int, title: String, latitude: Double, longitude: Double, radius: Double) {
+    init(id: Int, user: User, title: String, latitude: Double, longitude: Double, radius: Double) {
         self.id = id
-        self.userId = userId
+        self.user = user
         self.title = title
         self.latitude = latitude
         self.longitude = longitude

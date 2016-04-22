@@ -54,6 +54,16 @@ class ExploreViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         circleRenderer.fillColor = UIColor.blueColor().colorWithAlphaComponent(0.1)
         circleRenderer.strokeColor = UIColor.blueColor()
         circleRenderer.lineWidth = 1
+        
+        let mapPoint = MKMapPointForCoordinate(mapView.userLocation.coordinate);
+        let circlePoint = circleRenderer.pointForMapPoint(mapPoint)
+        let entered = CGPathContainsPoint(circleRenderer.path, nil, circlePoint, false)
+        
+        if(entered) {
+            print("entered!!")
+        }
+        
+        
         return circleRenderer
     }
     
@@ -86,9 +96,15 @@ class ExploreViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             self.Locations.removeAll()
             for item in jsonData
             {
+                let userData = item.objectForKey("user")! as! [String: String]
+                let user = User(
+                    id: Int(userData["id"]!)!,
+                    username: userData["name"]!,
+                    color: userData["color"]!)
+                
                 let newLocation = Location(
                     id: Int(item.objectForKey("id") as! String)!,
-                    userId: Int(item.objectForKey("user_id") as! String)!,
+                    user: user,
                     title: item.objectForKey("title") as! String,
                     latitude: Double(item.objectForKey("pos_latitude") as! String)!,
                     longitude: Double(item.objectForKey("pos_longitude") as! String)!,
