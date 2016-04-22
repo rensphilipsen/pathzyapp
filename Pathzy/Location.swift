@@ -10,22 +10,18 @@ import Foundation
 
 class Location {
     var id: Int
+    var userId : Int
     var title: String
     var latitude: Double
     var longitude: Double
     var radius: Double
-    var strokeWidth: Double
-    var strokeColor: String
-    var fillColor: String
     
-    init(id: Int, title: String, latitude: Double, longitude: Double, radius: Double, strokeWidth: Double, strokeColor: String, fillColor: String) {
+    init(id: Int, userId: Int, title: String, latitude: Double, longitude: Double, radius: Double) {
         self.id = id
+        self.userId = userId
         self.title = title
         self.latitude = latitude
         self.longitude = longitude
         self.radius = radius
-        self.strokeWidth = strokeWidth
-        self.strokeColor = strokeColor
-        self.fillColor = fillColor
     }
 }

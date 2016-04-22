@@ -39,6 +39,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate  {
             
             if (signedIn) {
                 dispatch_async(dispatch_get_main_queue(), {
+                    
                     self.performSegueWithIdentifier("loggedIn", sender: self)
                 })
             } else {
