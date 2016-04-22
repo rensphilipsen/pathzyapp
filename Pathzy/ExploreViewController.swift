@@ -14,7 +14,7 @@ class ExploreViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     @IBOutlet var mapView: MKMapView!
     var Locations = [Location]()
     var locationManager: CLLocationManager!
-    
+    var FillColor = UIColor()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,9 +51,9 @@ class ExploreViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         let circleRenderer = MKCircleRenderer(overlay: overlay)
-        circleRenderer.fillColor = UIColor.blueColor().colorWithAlphaComponent(0.1)
-        circleRenderer.strokeColor = UIColor.blueColor()
-        circleRenderer.lineWidth = 1
+        circleRenderer.fillColor = FillColor.colorWithAlphaComponent(0.5)
+        circleRenderer.strokeColor = FillColor.colorWithAlphaComponent(1)
+        circleRenderer.lineWidth = 3
         
         let mapPoint = MKMapPointForCoordinate(mapView.userLocation.coordinate);
         let circlePoint = circleRenderer.pointForMapPoint(mapPoint)
@@ -117,8 +117,14 @@ class ExploreViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     }
     
     func loadLocations(){
+        dispatch_async(dispatch_get_main_queue(), {
+            let overlays = self.mapView.overlays
+            self.mapView.removeOverlays(overlays)
+        })
+        
         for location in self.Locations {
             dispatch_async(dispatch_get_main_queue(), {
+                self.FillColor = self.colorWithHexString(location.user.color)
                 let locationCoords = CLLocationCoordinate2DMake(location.latitude, location.longitude)
                 self.mapView.addOverlay(MKCircle(centerCoordinate: locationCoords, radius: location.radius))
             })
