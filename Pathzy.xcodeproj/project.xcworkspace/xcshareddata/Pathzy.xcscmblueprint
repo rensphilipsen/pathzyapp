@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "0C1DF1E5F2B1990AADD8CFD32E692523AD2EE3C0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "0C1DF1E5F2B1990AADD8CFD32E692523AD2EE3C0" : 0,
+    "7DE938444DC322B4FF18BC573AA2362CD63F187E" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "22D3E0CA-70D9-4019-B628-4474DB3D0A1E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "0C1DF1E5F2B1990AADD8CFD32E692523AD2EE3C0" : "Pathzy\/",
+    "7DE938444DC322B4FF18BC573AA2362CD63F187E" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Pathzy",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Pathzy.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/rensphilipsen\/PathzyApp.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0C1DF1E5F2B1990AADD8CFD32E692523AD2EE3C0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/rensphilipsen\/SM3Practicum3.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7DE938444DC322B4FF18BC573AA2362CD63F187E"
+    }
+  ]
+}

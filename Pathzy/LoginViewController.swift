@@ -8,13 +8,15 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate  {
 
     @IBOutlet weak var loginUsername: UITextField!
     @IBOutlet weak var loginPassword: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.loginUsername.delegate = self
+        self.loginPassword.delegate = self
         // Do any additional setup after loading the view.
     }
 
@@ -24,9 +26,43 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginButtonPressed(sender: AnyObject) {
-        if (loginUsername.text == "rens" && loginPassword.text == "rens") {
-            self.dismissViewControllerAnimated(true, completion: nil)
+        self.checkLogin(loginUsername.text!, password: loginPassword.text!){ (response) in
+            var response = response as? NSArray
+                self.performSegueWithIdentifier("loggedIn", sender: self)
+            
+                let alertController = UIAlertController(title: "Pathzy", message:
+                    "Username and/or password incorrect!", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+            
+            
         }
+    }
+    
+    func checkLogin(username: String, password: String, callback: (AnyObject) -> ()) {
+        let url = NSURL(string: "http://pathzy.nl/getlocations.php?username="+username+"&password="+password)
+        let request = NSURLRequest(URL: url!)
+        let session = NSURLSession.sharedSession()
+        let dataTask = session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            do
+            {
+                if let jsonObject: AnyObject = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
+                {
+                    callback(jsonObject)
+                }
+            }
+            catch
+            {
+                print("Error parsing JSON data")
+            }
+        }
+        dataTask.resume()
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool
+    {
+        textField.resignFirstResponder()
+        return true;
     }
     
 

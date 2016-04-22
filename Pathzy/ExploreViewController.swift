@@ -33,7 +33,6 @@ class ExploreViewController: UIViewController, CLLocationManagerDelegate, MKMapV
         })
         
         self.mapView.delegate = self
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -66,7 +65,7 @@ class ExploreViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             if (data != nil) {
                 do
                 {
-                    if let jsonObject: AnyObject = try NSJSONSerialization.JSONObjectWithData(data!, 	   options: NSJSONReadingOptions.AllowFragments)
+                    if let jsonObject: AnyObject = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)
                     {
                         self.parseJsonData(jsonObject)
                     }
