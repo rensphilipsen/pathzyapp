@@ -41,6 +41,7 @@ class ExploreViewController: UIViewController, CLLocationManagerDelegate, MKMapV
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // Setting the current location to camera
         //let location = locations.last
         //let center = CLLocationCoordinate2D(latitude: location!.coordinate.latitude, longitude: location!.coordinate.longitude)
         //let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
@@ -106,17 +107,7 @@ class ExploreViewController: UIViewController, CLLocationManagerDelegate, MKMapV
             dispatch_async(dispatch_get_main_queue(), {
                 let locationCoords = CLLocationCoordinate2DMake(location.latitude, location.longitude)
                 self.mapView.addOverlay(MKCircle(centerCoordinate: locationCoords, radius: location.radius))
-            });
-            
-            
-            /*let radius = GMSCircle()
-            radius.position = CLLocationCoordinate2DMake(location.latitude, location.longitude)
-            radius.radius = location.radius
-            radius.strokeWidth = 2
-            radius.strokeColor =
-            radius.fillColor =
-            radius.title = location.title
-            radius.map = mapView*/
+            })
         }
     }
     

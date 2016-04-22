@@ -18,12 +18,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate  {
         self.loginUsername.delegate = self
         self.loginPassword.delegate = self
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
-        
-
-        // Do any additional setup after loading the view.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,10 +33,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate  {
             let jsonData = response as? [String: AnyObject]
             
             var signedIn = false
-            signedIn = (jsonData!["authentication"]?.boolValue)!
+            signedIn = jsonData!["authentication"]!.boolValue!
             
             if (signedIn) {
-                self.performSegueWithIdentifier("loggedIn", sender: self)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.performSegueWithIdentifier("loggedIn", sender: self)
+                })
             } else {
                 let alertController = UIAlertController(title: "Pathzy", message:
                     "Username and/or password incorrect!", preferredStyle: UIAlertControllerStyle.Alert)
@@ -70,36 +69,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate  {
     }
     
     func keyboardWillShow(sender: NSNotification) {
-        
         self.view.frame.origin.y = -150
-        
     }
-    
-    
     
     func keyboardWillHide(sender: NSNotification) {
-        
         self.view.frame.origin.y = 0
-        
     }
-    
-
     
     func textFieldShouldReturn(textField: UITextField) -> Bool
     {
         textField.resignFirstResponder()
         return true;
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
