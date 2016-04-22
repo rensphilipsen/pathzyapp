@@ -11,11 +11,11 @@ import Foundation
 class User {
     var id: Int
     var username: String
-    var password: String
+    var color: String
     
-    init(id: Int, username: String, password: String) {
+    init(id: Int, username: String, color: String) {
         self.id = id
         self.username = username
-        self.password = password
+        self.color = color
     }
 }

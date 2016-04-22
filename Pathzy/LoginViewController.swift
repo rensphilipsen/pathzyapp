@@ -26,16 +26,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate  {
     }
     
     @IBAction func loginButtonPressed(sender: AnyObject) {
-        self.checkLogin(loginUsername.text!, password: loginPassword.text!){ (response) in
-            var response = response as? NSArray
-                self.performSegueWithIdentifier("loggedIn", sender: self)
+        self.checkLogin(loginUsername.text!, password: loginPassword.text!){ (response:AnyObject) in
+            let jsonData = response as? [String: AnyObject]
             
+            var signedIn = false
+            signedIn = (jsonData!["authentication"]?.boolValue)!
+            
+            if (signedIn) {
+                self.performSegueWithIdentifier("loggedIn", sender: self)
+            } else {
                 let alertController = UIAlertController(title: "Pathzy", message:
                     "Username and/or password incorrect!", preferredStyle: UIAlertControllerStyle.Alert)
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
-            
-            
+            }
         }
     }
     
