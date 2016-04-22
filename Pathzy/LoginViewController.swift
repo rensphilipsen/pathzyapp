@@ -18,9 +18,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate  {
         self.loginUsername.delegate = self
         self.loginPassword.delegate = self
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
+        dispatch_async(dispatch_get_main_queue(), {
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        })
     }
 
     override func didReceiveMemoryWarning() {
